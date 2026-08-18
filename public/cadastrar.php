@@ -2,10 +2,17 @@
 
 include "../infra/conexao.php";
 
-if (isset($_POST["nome"]) && isset($_POST["email"])) {
+
+// CADASTRAR USUÁRIO
+
+if (isset($_POST["email"])) {
 
     $nome = $_POST["nome"];
     $email = $_POST["email"];
+
+    if (empty($nome) || empty($email)) {
+        die("Preencha todos os campos.");
+    }
 
     $sql = "INSERT INTO usuarios (nome, email) VALUES (?, ?)";
 
@@ -13,27 +20,49 @@ if (isset($_POST["nome"]) && isset($_POST["email"])) {
     $stmt->bind_param("ss", $nome, $email);
     $stmt->execute();
 
-    header("Location: cadastro_usuario.php");
+    header("Location: cadastro_usuario.php?sucesso=1");
     exit();
-
 }
 
-if (isset($_POST["usuarios"]) && isset($_POST["pratos"])) {
 
-    $usuarios = $_POST["usuarios"];
-    $pratos = $_POST["pratos"];
+// CADASTRAR PRATO
 
-    $sql = "INSERT INTO usuarios (nome, email) VALUES (?, ?)";
-    $sql = "INSERT INTO pratos (nome, descricao, preco, usuario_id)
-        VALUES (?, ?, ?, ?)";
+if (isset($_POST["descricao"])) {
+
+    $nome = $_POST["nome"];
+    $descricao = $_POST["descricao"];
+    $preco = $_POST["preco"];
+    $categoria = $_POST["categoria"];
+    $usuario_id = $_POST["usuario_id"];
+
+    if (
+        empty($nome) ||
+        empty($descricao) ||
+        empty($preco) ||
+        empty($categoria) ||
+        empty($usuario_id)
+    ) {
+        die("Preencha todos os campos.");
+    }
+
+    $sql = "INSERT INTO pratos
+            (nome, descricao, preco, categoria, usuario_id)
+            VALUES (?, ?, ?, ?, ?)";
 
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("ss", $usuarios, $pratos);
+    $stmt->bind_param(
+        "ssdsi",
+        $nome,
+        $descricao,
+        $preco,
+        $categoria,
+        $usuario_id
+    );
+
     $stmt->execute();
 
-    header("Location: ../index.php");
+    header("Location: cadastrar_pratos.php?sucesso=1");
     exit();
-
 }
 
 ?>

@@ -1,8 +1,7 @@
 <?php
 
 include "infra/conexao.php";
-$pratos = mysqli_query($conexao, "SELECT * FROM prato");
-
+$pratos = mysqli_query($conexao, "SELECT * FROM pratos");
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +30,7 @@ $pratos = mysqli_query($conexao, "SELECT * FROM prato");
             <br>
 
             <form action="public/cadastrar.php" method="POST">
-            <a href="public/vizualizar_tabela.php">Visualizar Tabela</a>
+            <a href="public/visualizar_tabela.php">Visualizar Tabela</a>
             <br>
 
 

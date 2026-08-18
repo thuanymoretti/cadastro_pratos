@@ -1,5 +1,5 @@
+CREATE DATABASE IF NOT EXISTS pratos_arthur_thuany_m4;
 
-CREATE DATABASE pratos_arthur_thuany_m4;
 USE pratos_arthur_thuany_m4;
 
 CREATE TABLE usuarios (
@@ -13,6 +13,7 @@ CREATE TABLE pratos (
     nome VARCHAR(100) NOT NULL,
     descricao VARCHAR(255) NOT NULL,
     preco DECIMAL(10, 2) NOT NULL,
-    usuario_id INT,
+    categoria VARCHAR(100) NOT NULL,
+    usuario_id INT NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );

@@ -2,62 +2,101 @@
 
 include "../infra/conexao.php";
 
-$id = $_GET["id"];
+$sql = "SELECT 
+            pratos.id,
+            pratos.nome,
+            pratos.descricao,
+            pratos.preco,
+            pratos.categoria,
+            usuarios.nome AS usuario
+        FROM pratos
+        INNER JOIN usuarios
+        ON pratos.usuario_id = usuarios.id";
 
-// "id = $id" substituído por "id = ?" pois impede que uma entrada do usuário seja interpretada como código SQL
-$sql = "SELECT * FROM prato WHERE id = ?";
-
-//prepara a consulta SQL antes de executá-la
-$stmt = $conexao->prepare($sql);
-
-//substituição do valor de "$i" no "i"
-$stmt->bind_param("i", $id);
-
-// Executa a consulta preparada.
-$stmt->execute();
-
-// Obtém o resultado da consulta.
-$resultado = $stmt->get_result();
-
-//transforma em uma array associativa para facilitar a manipulação
-$prato =mysqli_fetch_assoc($resultado);
+$resultado = $conexao->query($sql);
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD - Livraria</title>
-    <link rel="stylesheet" href="style/styles.css">
+
+    <title>Pratos cadastrados</title>
+
 </head>
 
 <body>
-    <header>
-        <h1>CRUD - Pratos</h1>
-    </header>
-    <main>
-        <h2>Editando o prato <?php echo $prato["prato"]?>!</h2>
-        <form action="atualizar.php" method="POST">
-            <input type="hidden" name="id" value="<?php echo $prato["id"]?>">
 
-            <label for="usuario">Usuário:</label>
-            <input type="text" name="usuario" value="<?php echo $prato["usuario"]?>">
-            <br>
-            <label for="prato">Prato:</label>
-            <input type="text" name="prato" value="<?php echo $prato["prato"]?>">
-            <br>
-            
-            <button type="submit">Atualizar</button>
-        </form>
+<h1>Pratos cadastrados</h1>
 
-    </main>
-    <footer>
+<table border="1">
 
-    </footer>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Categoria</th>
+        <th>Usuário</th>
+        <th>Ações</th>
+    </tr>
 
+    <?php while ($prato = $resultado->fetch_assoc()) { ?>
+
+        <tr>
+
+            <td>
+                <?= $prato["id"] ?>
+            </td>
+
+            <td>
+                <?= $prato["nome"] ?>
+            </td>
+
+            <td>
+                <?= $prato["descricao"] ?>
+            </td>
+
+            <td>
+                R$ <?= number_format($prato["preco"], 2, ",", ".") ?>
+            </td>
+
+            <td>
+                <?= $prato["categoria"] ?>
+            </td>
+
+            <td>
+                <?= $prato["usuario"] ?>
+            </td>
+
+            <td>
+
+                <a href="editar.php?id=<?= $prato["id"] ?>">
+                    Editar
+                </a>
+
+                |
+
+                <a href="excluir.php?id=<?= $prato["id"] ?>">
+                    Excluir
+                </a>
+
+            </td>
+
+        </tr>
+
+    <?php } ?>
+
+</table>
+
+<br>
+
+<a href="../index.php">
+    <button>Voltar para o início</button>
+</a>
 
 </body>
 

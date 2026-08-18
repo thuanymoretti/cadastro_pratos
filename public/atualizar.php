@@ -3,11 +3,35 @@
 include "../infra/conexao.php";
 
 $id = $_POST["id"];
-$usuario = $_POST["usuario"];
-$prato = $_POST["prato"];
+$nome = $_POST["nome"];
+$descricao = $_POST["descricao"];
+$preco = $_POST["preco"];
+$categoria = $_POST["categoria"];
+$usuario_id = $_POST["usuario_id"];
 
+$sql = "UPDATE pratos
+        SET nome = ?,
+            descricao = ?,
+            preco = ?,
+            categoria = ?,
+            usuario_id = ?
+        WHERE id = ?";
 
-$sql = "UPDATE prato SET prato='$prato',usuario='$usuario' WHERE id = '$id'";
+$stmt = $conexao->prepare($sql);
 
-mysqli_query($conexao, $sql);
-header("Location: ../index.php");
+$stmt->bind_param(
+    "ssdsii",
+    $nome,
+    $descricao,
+    $preco,
+    $categoria,
+    $usuario_id,
+    $id
+);
+
+$stmt->execute();
+
+header("Location: visualizar_tabela.php");
+exit();
+
+?>

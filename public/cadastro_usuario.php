@@ -9,38 +9,47 @@ include "../infra/conexao.php";
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD - Usuários</title>
-    <link rel="stylesheet" href="../style/style.css">
+    <title>Cadastrar Usuário</title>
 </head>
 
 <body>
 
-    <header>
-        <h1>CRUD - Usuários</h1>
-    </header>
+<h1>CRUD - Usuários</h1>
 
-    <main>
+<?php if (isset($_GET["sucesso"])) { ?>
+    <h2>Usuário cadastrado com sucesso!</h2>
 
-        <h2>Adicione um novo usuário!</h2>
+    <a href="../index.php">
+        <button>Voltar para o início</button>
+    </a>
 
-       <form action="cadastrar.php" method="POST">
+<?php } else { ?>
 
-    <label for="nome">Nome:</label>
-    <input type="text" name="nome">
+    <h2>Cadastre um novo usuário</h2>
+
+    <form action="cadastrar.php" method="POST">
+
+        Nome:
+        <input type="text" name="nome" required>
+        <br>
+        
+        <br>
+        Email:
+        <input type="email" name="email" required>
+        <br>
+
+        <br>
+        <button type="submit">Cadastrar</button>
+
+    </form>
 
     <br>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email">
+    <a href="../index.php">
+        <button>Voltar para o início</button>
+    </a>
 
-    <br>
-
-    <button type="submit">Cadastrar</button>
-
-</form>
-
-    </main>
+<?php } ?>
 
 </body>
 
