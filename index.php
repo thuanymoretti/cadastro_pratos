@@ -17,44 +17,26 @@ $pratos = mysqli_query($conexao, "SELECT * FROM prato");
 
 <body>
     <header>
-        <h1>CRUD - Pratos</h1>
+        <h1>CRUD - Tela de inicio</h1>
     </header>
     <main>
         <h2>Adicione um novo prato!</h2>
         <form action="public/cadastrar.php" method="POST">
-            <label for="usuario">Usuário:</label>
-            <input type="text" name="usuario">
+
+            <a href="public/cadastro_usuario.php">Cadastrar usuário</a>
             <br>
-            <label for="prato">Prato:</label>
-            <input type="text" name="prato">
+
+            <form action="public/cadastrar.php" method="POST">
+            <a href="public/cadastrar_pratos.php">Cadastrar prato</a>
             <br>
-           
-            <button type="submit">Cadastrar</button>
+
+            <form action="public/cadastrar.php" method="POST">
+            <a href="public/vizualizar_tabela.php">Visualizar Tabela</a>
+            <br>
+
+
         </form>
-        <div>
-            <h2>Pratos Cadastrados</h2>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Usuário</th>
-                    <th>Prato</th>
-                
-                    <th>Ações</th>
-                </tr>
-                <?php while ($prato = mysqli_fetch_assoc($pratos)) { ?>
-                    <tr>
-                        <td><?php echo $prato["id"] ?></td>
-                        <td><?php echo $prato["usuario"] ?></td>
-                        <td><?php echo $prato["prato"] ?></td>
-                        
-                        <td>
-                            <a href="public/editar.php?id=<?php echo $prato["id"] ?>">Editar</a>
-                            <a href="public/excluir.php?id=<?php echo $prato["id"] ?>">Excluir</a>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </table>
-        </div>
+        
 
     </main>
     <footer>

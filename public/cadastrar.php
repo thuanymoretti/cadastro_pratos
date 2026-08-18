@@ -2,13 +2,38 @@
 
 include "../infra/conexao.php";
 
-$usuario = $_POST["usuario"];
-$prato = $_POST["prato"];
+if (isset($_POST["nome"]) && isset($_POST["email"])) {
 
+    $nome = $_POST["nome"];
+    $email = $_POST["email"];
 
-$sql = "INSERT INTO prato (usuario,prato) VALUES ('$usuario','$prato')";
+    $sql = "INSERT INTO usuarios (nome, email) VALUES (?, ?)";
 
-mysqli_query($conexao, $sql);
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("ss", $nome, $email);
+    $stmt->execute();
 
-header("Location: ../index.php");
+    header("Location: cadastro_usuario.php");
+    exit();
+
+}
+
+if (isset($_POST["usuarios"]) && isset($_POST["pratos"])) {
+
+    $usuarios = $_POST["usuarios"];
+    $pratos = $_POST["pratos"];
+
+    $sql = "INSERT INTO usuarios (nome, email) VALUES (?, ?)";
+    $sql = "INSERT INTO pratos (nome, descricao, preco, usuario_id)
+        VALUES (?, ?, ?, ?)";
+
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("ss", $usuarios, $pratos);
+    $stmt->execute();
+
+    header("Location: ../index.php");
+    exit();
+
+}
+
 ?>
