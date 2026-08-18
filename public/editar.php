@@ -5,7 +5,7 @@ include "../infra/conexao.php";
 $id = $_GET["id"];
 
 // "id = $id" substituído por "id = ?" pois impede que uma entrada do usuário seja interpretada como código SQL
-$sql = "SELECT * FROM livros WHERE id = ?";
+$sql = "SELECT * FROM prato WHERE id = ?";
 
 //prepara a consulta SQL antes de executá-la
 $stmt = $conexao->prepare($sql);
@@ -20,7 +20,7 @@ $stmt->execute();
 $resultado = $stmt->get_result();
 
 //transforma em uma array associativa para facilitar a manipulação
-$livro =mysqli_fetch_assoc($resultado);
+$prato =mysqli_fetch_assoc($resultado);
 
 ?>
 
@@ -36,22 +36,20 @@ $livro =mysqli_fetch_assoc($resultado);
 
 <body>
     <header>
-        <h1>CRUD - Livraria</h1>
+        <h1>CRUD - Pratos</h1>
     </header>
     <main>
-        <h2>Editando o livro <?php echo $livro["titulo"]?>!</h2>
+        <h2>Editando o prato <?php echo $prato["prato"]?>!</h2>
         <form action="atualizar.php" method="POST">
-            <input type="hidden" name="id" value="<?php echo $livro["id"]?>">
+            <input type="hidden" name="id" value="<?php echo $prato["id"]?>">
 
-            <label for="titulo">Título:</label>
-            <input type="text" name="titulo" value="<?php echo $livro["titulo"]?>">
+            <label for="usuario">Usuário:</label>
+            <input type="text" name="usuario" value="<?php echo $prato["usuario"]?>">
             <br>
-            <label for="autor">Autor:</label>
-            <input type="text" name="autor" value="<?php echo $livro["autor"]?>">
+            <label for="prato">Prato:</label>
+            <input type="text" name="prato" value="<?php echo $prato["prato"]?>">
             <br>
-            <label for="ano">Ano de Publicação:</label>
-            <input type="number" name="ano" value="<?php echo $livro["ano"]?>">
-            <br>
+            
             <button type="submit">Atualizar</button>
         </form>
 

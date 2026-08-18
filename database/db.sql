@@ -1,10 +1,9 @@
 
-CREATE DATABASE livraria_gomes_m4;
-USE livraria_icaro_m2;
+CREATE DATABASE pratos_arthur_thuany_m4;
+USE pratos_arthur_thuany_m4;
 
-CREATE TABLE livros (
+CREATE TABLE prato (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(200) NOT NULL,
-    autor VARCHAR(100)NOT NULL,
-    ano INT NOT NULL
+    usuario VARCHAR(100) NOT NULL,
+    prato VARCHAR(100) NOT NULL
 );
