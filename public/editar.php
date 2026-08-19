@@ -2,18 +2,11 @@
 
 include "../infra/conexao.php";
 
-$sql = "SELECT 
-            pratos.id,
-            pratos.nome,
-            pratos.descricao,
-            pratos.preco,
-            pratos.categoria,
-            usuarios.nome AS usuario
-        FROM pratos
-        INNER JOIN usuarios
-        ON pratos.usuario_id = usuarios.id";
+$id = $_GET["id"];
+$sql = "SELECT * FROM pratos WHERE id = $id";
+$resultado = mysqli_query($conexao, $sql );
 
-$resultado = $conexao->query($sql);
+$prato =mysqli_fetch_assoc($resultado);
 
 ?>
 
@@ -21,76 +14,37 @@ $resultado = $conexao->query($sql);
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <title>Pratos cadastrados</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD - Pratos</title>
+    <link rel="stylesheet" href="style/styles.css">
 </head>
 
 <body>
+    <header>
+        <h1>CRUD - Pratos</h1>
+    </header>
 
-<h1>Pratos cadastrados</h1>
+    <main>
+        <h2>Editar Prato</h2>
+        <form action="atualizar.php" method="POST">
+            <input type="hidden" name="id" value="<?php echo $prato['id']; ?>">
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" value="<?php echo $prato['nome']; ?>" required><br>
 
-<table border="1">
+            <label for="descricao">Descrição:</label>
+            <textarea name="descricao" id="descricao" required><?php echo $prato['descricao']; ?></textarea><br>
 
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Descrição</th>
-        <th>Preço</th>
-        <th>Categoria</th>
-        <th>Usuário</th>
-        <th>Ações</th>
-    </tr>
+            <label for="preco">Preço:</label>
+            <input type="number" step="0.01" name="preco" id="preco" value="<?php echo $prato['preco']; ?>" required><br>
 
-    <?php while ($prato = $resultado->fetch_assoc()) { ?>
+            <label for="categoria">Categoria:</label>
+            <input type="text" name="categoria" id="categoria" value="<?php echo $prato['categoria']; ?>" required><br>
 
-        <tr>
+            <input type="submit" value="Atualizar">
+        </form>
 
-            <td>
-                <?= $prato["id"] ?>
-            </td>
-
-            <td>
-                <?= $prato["nome"] ?>
-            </td>
-
-            <td>
-                <?= $prato["descricao"] ?>
-            </td>
-
-            <td>
-                R$ <?= number_format($prato["preco"], 2, ",", ".") ?>
-            </td>
-
-            <td>
-                <?= $prato["categoria"] ?>
-            </td>
-
-            <td>
-                <?= $prato["usuario"] ?>
-            </td>
-
-            <td>
-
-                <a href="editar.php?id=<?= $prato["id"] ?>">
-                    Editar
-                </a>
-
-                |
-
-                <a href="excluir.php?id=<?= $prato["id"] ?>">
-                    Excluir
-                </a>
-
-            </td>
-
-        </tr>
-
-    <?php } ?>
-
-</table>
+    
 
 <br>
 
