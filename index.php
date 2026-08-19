@@ -11,22 +11,22 @@ $pratos = mysqli_query($conexao, "SELECT * FROM pratos");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD - Pratos</title>
-    <link rel="stylesheet" href="style/styles.css">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
     <header>
-        <h1>CRUD - Tela de inicio</h1>
+        <link rel="stylesheet" href="style/style.css">
     </header>
     <main>
-        <h2>Adicione um novo prato!</h2>
+        <h2>- Faça seu pedido! -</h2>
         <form action="public/cadastrar.php" method="POST">
 
-            <a href="public/cadastro_usuario.php">Cadastrar usuário</a>
+            <a href="public/cadastro_usuario.php">Cadastrar Usuário</a>
             <br>
 
             <form action="public/cadastrar.php" method="POST">
-            <a href="public/cadastrar_pratos.php">Cadastrar prato</a>
+            <a href="public/cadastrar_pratos.php">Cadastrar Prato</a>
             <br>
 
             <form action="public/cadastrar.php" method="POST">

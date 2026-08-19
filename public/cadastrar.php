@@ -2,22 +2,23 @@
 
 include "../infra/conexao.php";
 
+$tipo = $_POST["tipo"] ?? "";
 
-// CADASTRAR USUÁRIO
 
-if (isset($_POST["email"])) {
+/* CADASTRAR USUÁRIO */
+
+if ($tipo == "usuario") {
 
     $nome = $_POST["nome"];
     $email = $_POST["email"];
 
-    if (empty($nome) || empty($email)) {
-        die("Preencha todos os campos.");
-    }
-
-    $sql = "INSERT INTO usuarios (nome, email) VALUES (?, ?)";
+    $sql = "INSERT INTO usuarios (nome, email)
+            VALUES (?, ?)";
 
     $stmt = $conexao->prepare($sql);
+
     $stmt->bind_param("ss", $nome, $email);
+
     $stmt->execute();
 
     header("Location: cadastro_usuario.php?sucesso=1");
@@ -25,9 +26,9 @@ if (isset($_POST["email"])) {
 }
 
 
-// CADASTRAR PRATO
+/* CADASTRAR PRATO */
 
-if (isset($_POST["descricao"])) {
+if ($tipo == "prato") {
 
     $nome = $_POST["nome"];
     $descricao = $_POST["descricao"];
@@ -35,21 +36,12 @@ if (isset($_POST["descricao"])) {
     $categoria = $_POST["categoria"];
     $usuario_id = $_POST["usuario_id"];
 
-    if (
-        empty($nome) ||
-        empty($descricao) ||
-        empty($preco) ||
-        empty($categoria) ||
-        empty($usuario_id)
-    ) {
-        die("Preencha todos os campos.");
-    }
-
     $sql = "INSERT INTO pratos
             (nome, descricao, preco, categoria, usuario_id)
             VALUES (?, ?, ?, ?, ?)";
 
     $stmt = $conexao->prepare($sql);
+
     $stmt->bind_param(
         "ssdsi",
         $nome,

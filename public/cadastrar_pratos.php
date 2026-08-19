@@ -24,8 +24,7 @@ $usuarios = $conexao->query($sql);
 <body>
 
 <header>
-
-    <h1>CRUD - Pratos</h1>
+    <link rel="stylesheet" href="../style/style.css">
 
 </header>
 
@@ -41,9 +40,10 @@ $usuarios = $conexao->query($sql);
 
 <?php } else { ?>
 
-    <h2>Adicione um novo prato!</h2>
+    <h2>- Adicione um novo prato! -</h2>
 
     <form action="cadastrar.php" method="POST">
+       <input type="hidden" name="tipo" value="prato">
 
         <label>Nome do Prato:</label>
         <input type="text" name="nome" required>
